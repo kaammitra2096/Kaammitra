@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="KaamMitra - अपने शहर में हुनर के अनुसार काम खोजें।">
+<title>KaamMitra | हर शहर में काम</title>
+<style>
+:root{--navy:#12345a;--blue:#1769aa;--green:#16845b;--ink:#182536;--muted:#64748b;--bg:#f4f7fb;--line:#e3eaf2}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Devanagari",sans-serif;color:var(--ink);background:var(--bg)}
+header{background:linear-gradient(120deg,#12345a,#1769aa);color:white;padding:22px max(18px,calc((100% - 1080px)/2))}
+.brand{font-size:26px;font-weight:800;letter-spacing:.2px}.tag{opacity:.9;font-size:14px;margin-top:2px}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}nav button,.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
+nav button{background:#ffffff20;color:white}nav button.active{background:white;color:var(--navy)}
+main{max-width:1080px;margin:24px auto;padding:0 16px}.hero{background:white;border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:center;box-shadow:0 5px 22px #12345a0b}
+h1{font-size:clamp(27px,4vw,40px);line-height:1.2;margin:0 0 10px;color:var(--navy)}h2{font-size:23px;color:var(--navy);margin:0 0 15px}p{line-height:1.6}.muted{color:var(--muted);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#eef6ff;padding:15px;border-radius:13px;font-weight:700;color:var(--navy)}.stat small{display:block;color:var(--muted);font-weight:500}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:14px;font-weight:700}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font:inherit;background:white}.field textarea{min-height:90px}
+.btn{background:var(--green);color:white}.btn.secondary{background:#eaf2fb;color:var(--navy)}.btn.blue{background:var(--blue)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.tabs{display:none}.view{display:none}.view.active{display:block}
+.jobs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.job{border:1px solid var(--line);border-radius:13px;padding:15px}.job h3{margin:0 0 6px;color:var(--navy)}.pill{display:inline-block;background:#eaf7f0;color:#126342;border-radius:20px;padding:4px 9px;font-size:12px;margin:5px 4px 0 0}
+.notice{background:#fff7e6;border:1px solid #f4d79b;border-radius:12px;padding:13px;font-size:13px;line-height:1.5;margin-top:15px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:28px 16px}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed #cbd5e1;border-radius:12px}
+@media(max-width:700px){.hero{grid-template-columns:1fr}.grid,.jobs{grid-template-columns:1fr}.panel{padding:16px}.stats{max-width:430px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">🤝 KaamMitra</div><div class="tag">हर शहर में काम, हर हुनर को अवसर</div>
+  <nav>
+    <button class="active" data-view="home">Home</button>
+    <button data-view="jobs">काम खोजें</button>
+    <button data-view="worker">Worker Registration</button>
+    <button data-view="employer">Employer / Job Post</button>
+    <button data-view="admin">Demo Admin</button>
+  </nav>
+</header>
+<main>
+<section id="home" class="view active">
+  <div class="hero">
+    <div><h1>अपने शहर में, अपने हुनर के अनुसार काम खोजें।</h1>
+      <p>KaamMitra काम खोजने वाले वयस्क लोगों और स्थानीय कंपनियों को जोड़ने का शुरुआती Demo है। अपनी Skill चुनें, शहर बताएं और उपलब्ध काम देखें।</p>
+      <div class="actions"><button class="btn" onclick="show('jobs')">काम देखें</button><button class="btn secondary" onclick="show('worker')">Worker बनें</button></div>
+    </div>
+    <div class="stats"><div class="stat">📍 City-wise<small>शहर के अनुसार काम</small></div><div class="stat">🕒 Flexible<small>समय के अनुसार विकल्प</small></div><div class="stat">🧰 Skills<small>हुनर के अनुसार मिलान</small></div><div class="stat">🏢 Employers<small>कंपनियों के लिए Job Post</small></div></div>
+  </div>
+  <div class="notice"><b>महत्वपूर्ण:</b> यह केवल शुरुआती Demo है। अभी कोई वास्तविक नौकरी, भुगतान, सुरक्षित Login या ऑनलाइन Database जुड़ा नहीं है। यहाँ भरी जानकारी इसी Demo में आपके ब्राउज़र पर अस्थायी रूप से रहती है। असली लॉन्च से पहले सुरक्षा, गोपनीयता, Employer verification और कानूनी जाँच जरूरी है। यह प्लेटफॉर्म केवल 18 वर्ष या उससे अधिक आयु के कामगारों के लिए बनाया जा रहा है।</div>
+  <div class="panel"><h2>KaamMitra कैसे काम करेगा?</h2><div class="grid">
+    <div><b>1. Worker Registration</b><p class="muted">वयस्क Worker अपनी Skill, शहर और उपलब्ध समय दर्ज करेगा।</p></div>
+    <div><b>2. Employer Job Post</b><p class="muted">कंपनी काम, स्थान, समय और भुगतान की जानकारी देगी।</p></div>
+    <div><b>3. City + Skill Matching</b><p class="muted">सिस्टम उपयुक्त शहर और Skill के आधार पर काम दिखाएगा।</p></div>
+    <div><b>4. Apply & Contact</b><p class="muted">Worker आवेदन करेगा; सत्यापित Employer चयन करेगा।</p></div>
+  </div></div>
+</section>
+
+<section id="jobs" class="view">
+  <div class="panel"><h2>अपने शहर में काम खोजें</h2>
+    <div class="grid">
+      <div class="field"><label>शहर</label><input id="filterCity" placeholder="जैसे Nagpur, Warora"></div>
+      <div class="field"><label>काम / Skill</label><input id="filterSkill" placeholder="जैसे Data Entry, Sales"></div>
+    </div><div class="actions"><button class="btn blue" onclick="renderJobs()">Search Jobs</button><button class="btn secondary" onclick="clearFilters()">Clear</button></div>
+  </div>
+  <div class="panel"><h2>उपलब्ध Demo Jobs</h2><div id="jobList" class="jobs"></div></div>
+</section>
+
+<section id="worker" class="view">
+  <div class="panel"><h2>Worker Registration (18+)</h2><p class="muted">Demo के लिए केवल जरूरी सामान्य जानकारी भरें। अभी Aadhaar, बैंक विवरण या कोई संवेदनशील दस्तावेज न डालें।</p>
+    <form id="workerForm"><div class="grid">
+      <div class="field"><label>पूरा नाम</label><input required maxlength="60" name="name" placeholder="आपका नाम"></div>
+      <div class="field"><label>उम्र</label><input required type="number" min="18" max="100" name="age" placeholder="18 या अधिक"></div>
+      <div class="field"><label>शहर</label><input required name="city" maxlength="60" placeholder="जैसे Nagpur"></div>
+      <div class="field"><label>काम / Skill</label><select required name="skill"><option value="">चुनें</option><option>Data Entry</option><option>Customer Support</option><option>Sales / Shop Assistant</option><option>Teaching / Tutoring</option><option>Electrician / Repair</option><option>Cooking / Housekeeping</option><option>Delivery</option><option>Video Editing / Design</option><option>Other</option></select></div>
+      <div class="field"><label>काम का प्रकार</label><select name="type"><option>Part-time</option><option>Full-time</option><option>Work from home</option><option>Flexible hours</option></select></div>
+      <div class="field"><label>उपलब्ध समय</label><select name="hours"><option>2–4 घंटे</option><option>4–6 घंटे</option><option>6–8 घंटे</option><option>Flexible</option></select></div>
+    </div><label style="display:block;margin-top:14px;font-size:14px"><input required type="checkbox"> मैं पुष्टि करता/करती हूँ कि मेरी उम्र 18 वर्ष या अधिक है।</label>
+    <div class="actions"><button class="btn" type="submit">Demo Registration</button></div></form><p id="workerMsg" class="muted" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="employer" class="view">
+  <div class="panel"><h2>Employer Registration / Job Post</h2><p class="muted">Demo में असली कंपनी के गोपनीय विवरण न भरें। प्रकाशित करने से पहले Employer verification जरूरी है।</p>
+    <form id="jobForm"><div class="grid">
+      <div class="field"><label>कंपनी / दुकान का नाम</label><input required name="company" maxlength="80"></div>
+      <div class="field"><label>काम का नाम</label><input required name="title" maxlength="80" placeholder="जैसे Shop Assistant"></div>
+      <div class="field"><label>शहर</label><input required name="city" maxlength="60" placeholder="जैसे Nagpur"></div>
+      <div class="field"><label>Skill</label><select required name="skill"><option value="">चुनें</option><option>Data Entry</option><option>Customer Support</option><option>Sales / Shop Assistant</option><option>Teaching / Tutoring</option><option>Electrician / Repair</option><option>Cooking / Housekeeping</option><option>Delivery</option><option>Video Editing / Design</option><option>Other</option></select></div>
+      <div class="field"><label>काम का प्रकार</label><select name="type"><option>Part-time</option><option>Full-time</option><option>Work from home</option><option>Flexible hours</option></select></div>
+      <div class="field"><label>समय / शिफ्ट</label><input required name="shift" placeholder="जैसे सुबह 9 से 1"></div>
+      <div class="field"><label>भुगतान</label><input required name="pay" placeholder="जैसे ₹500 प्रति दिन"></div>
+      <div class="field"><label>कितने Worker चाहिए?</label><input required name="count" type="number" min="1" max="100" value="1"></div>
+    </div><div class="field" style="margin-top:14px"><label>काम का विवरण</label><textarea required name="description" maxlength="500" placeholder="काम की जिम्मेदारियाँ और जरूरी योग्यता"></textarea></div>
+    <div class="actions"><button class="btn" type="submit">Demo Job Post करें</button></div></form><p id="jobMsg" class="muted" aria-live="polite"></p>
+  </div>
+</section>
+
+<section id="admin" class="view">
+  <div class="panel"><h2>Demo Admin Dashboard</h2><p class="muted">यह केवल इसी ब्राउज़र में बने Demo records दिखाता है। यह सुरक्षित Admin Login नहीं है।</p>
+    <div class="grid"><div class="stat"><span id="workerCount">0</span><small>Demo Workers</small></div><div class="stat"><span id="postCount">0</span><small>Demo Job Posts</small></div></div>
+    <h3>Worker Records</h3><div id="workerRecords" class="muted">अभी कोई रिकॉर्ड नहीं।</div>
+    <h3>Job Posts</h3><div id="adminJobs" class="muted">अभी कोई पोस्ट नहीं।</div>
+    <div class="actions"><button class="btn secondary" onclick="exportData()">Demo Data Download (CSV)</button><button class="btn secondary" onclick="resetData()">Demo Data Clear</button></div>
+  </div>
+</section>
+</main>
+<footer>KaamMitra Demo • सुरक्षित और सत्यापित रोजगार के लिए बनाया जा रहा है</footer>
+<script>
+const demoJobs=[
+ {company:"Demo Retail Store",title:"Shop Assistant",city:"Nagpur",skill:"Sales / Shop Assistant",type:"Part-time",shift:"सुबह 9 से दोपहर 1",pay:"उदाहरण: ₹400/दिन",count:2,description:"ग्राहकों की सहायता और सामान व्यवस्थित करना।"},
+ {company:"Demo Services",title:"Data Entry Assistant",city:"Warora",skill:"Data Entry",type:"Flexible hours",shift:"दिन में 3 घंटे",pay:"उदाहरण: ₹300/दिन",count:1,description:"सामान्य रिकॉर्ड अपडेट करना। यह केवल Demo पोस्ट है।"},
+ {company:"Demo Learning Centre",title:"Tutor",city:"Chandrapur",skill:"Teaching / Tutoring",type:"Part-time",shift:"शाम 4 से 6",pay:"उदाहरण: ₹250/कक्षा",count:1,description:"बुनियादी विषयों में विद्यार्थियों की मदद करना।"}
+];
+const get=(k)=>JSON.parse(localStorage.getItem("km_"+k)||"[]");
+const put=(k,v)=>localStorage.setItem("km_"+k,JSON.stringify(v));
+function show(id){document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===id));if(id==="jobs")renderJobs();if(id==="admin")renderAdmin();window.scrollTo(0,0)}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));
+function card(j){return `<article class="job"><h3>${esc(j.title)}</h3><b>${esc(j.company)}</b><p class="muted">📍 ${esc(j.city)} · ${esc(j.type)}</p><span class="pill">${esc(j.skill)}</span><span class="pill">${esc(j.shift)}</span><p><b>${esc(j.pay)}</b> · जरूरत: ${esc(j.count)}</p><p class="muted">${esc(j.description)}</p><small class="muted">Demo listing — Employer सत्यापित नहीं है।</small></article>`}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function renderJobs(){let c=document.getElementById("filterCity").value.trim().toLowerCase(),s=document.getElementById("filterSkill").value.trim().toLowerCase();let all=[...demoJobs,...get("jobs")].filter(j=>(!c||j.city.toLowerCase().includes(c))&&(!s||j.skill.toLowerCase().includes(s)||j.title.toLowerCase().includes(s)));document.getElementById("jobList").innerHTML=all.length?all.map(card).join(""):'<div class="empty">इस खोज में कोई Demo Job नहीं मिली। शहर या Skill बदलकर देखें।</div>'}
+function clearFilters(){document.getElementById("filterCity").value="";document.getElementById("filterSkill").value="";renderJobs()}
+document.getElementById("workerForm").addEventListener("submit",e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));if(+d.age<18){document.getElementById("workerMsg").textContent="यह प्लेटफॉर्म केवल 18+ लोगों के लिए है।";return}let a=get("workers");a.push({...d,created:new Date().toLocaleDateString("hi-IN")});put("workers",a);e.target.reset();document.getElementById("workerMsg").textContent="Demo registration इस ब्राउज़र में सेव हुआ। अभी कोई वास्तविक नौकरी आवंटित नहीं हुई।"});
+document.getElementById("jobForm").addEventListener("submit",e=>{e.preventDefault();let d=Object.fromEntries(new FormData(e.target));let a=get("jobs");a.push(d);put("jobs",a);e.target.reset();document.getElementById("jobMsg").textContent="Demo Job Post सेव हुई। वास्तविक प्रकाशन से पहले Employer verification जरूरी है।"});
+function renderAdmin(){let w=get("workers"),j=get("jobs");document.getElementById("workerCount").textContent=w.length;document.getElementById("postCount").textContent=j.length;document.getElementById("workerRecords").innerHTML=w.length?w.map(x=>`<p>${esc(x.name)} · ${esc(x.city)} · ${esc(x.skill)} · ${esc(x.type)}</p>`).join(""):"अभी कोई रिकॉर्ड नहीं।";document.getElementById("adminJobs").innerHTML=j.length?j.map(x=>`<p>${esc(x.title)} · ${esc(x.city)} · ${esc(x.company)}</p>`).join(""):"अभी कोई पोस्ट नहीं।"}
+function exportData(){let rows=[["type","name/company","city","skill/job","type"],...get("workers").map(x=>["worker",x.name,x.city,x.skill,x.type]),...get("jobs").map(x=>["job",x.company,x.city,x.title,x.type])];let csv=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="kaammitra-demo.csv";a.click();URL.revokeObjectURL(a.href)}
+function resetData(){if(confirm("इस ब्राउज़र के सभी Demo records मिटा दें?")){localStorage.removeItem("km_workers");localStorage.removeItem("km_jobs");renderAdmin()}}
+renderJobs();
+</script>
+</body>
+</html>
