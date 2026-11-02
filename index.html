@@ -26,8 +26,40 @@ h1{font-size:clamp(27px,4vw,40px);line-height:1.2;margin:0 0 10px;color:var(--na
 <body>
 <header><div class="top"><div><div class="brand">🤝 KaamMitra</div><div class="tag" data-i="tagline">हर शहर में काम, हर हुनर को अवसर</div></div>
 <select id="language" aria-label="Select language"><option value="hi">हिंदी</option><option value="mr">मराठी</option><option value="en">English</option></select></div>
-<nav><button class="active" data-view="home" data-i="navHome">Home</button><button data-view="jobs" data-i="navJobs">काम खोजें</button><button data-view="worker" data-i="navWorker">Worker Registration</button><button data-view="employer" data-i="navEmployer">Employer / Job Post</button><button data-view="admin" data-i="navAdmin">Demo Admin</button></nav></header>
+<nav><button class="active" data-view="home" data-i="navHome">Home</button><button data-view="jobs" data-i="navJobs">काम खोजें</button><button data-view="worker" data-i="navWorker">Worker Registration</button><button data-view="employer" data-i="navEmployer">Employer / Job Post</button><button data-view="admin" data-i="navAdmin">Demo Admin</button><button data-view="account">Login / Sign Up</button></nav></header>
 <main>
+
+<section id="account" class="view">
+  <div class="panel">
+    <h2>KaamMitra Account</h2>
+    <p class="muted">Worker और Employer के लिए अलग-अलग account role चुनें। Email confirmation चालू है।</p>
+    <div class="grid">
+      <div class="field">
+        <label for="accountRole">Account type</label>
+        <select id="accountRole"><option value="worker">Worker</option><option value="employer">Employer</option></select>
+      </div>
+      <div class="field">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" minlength="8" maxlength="72" placeholder="At least 8 characters">
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="signUpBtn" type="button">Create account</button>
+      <button class="btn blue" id="signInBtn" type="button">Sign in</button>
+      <button class="btn secondary" id="signOutBtn" type="button" hidden>Sign out</button>
+    </div>
+    <p id="authMessage" class="muted" aria-live="polite">Supabase setup required before sign-up or sign-in can work.</p>
+    <div id="authSession" class="success" hidden></div>
+  </div>
+  <div class="notice">
+    <b>Testing notice:</b> अभी यह केवल Authentication UI है। Worker/Job data को Supabase में save करना तब तक चालू नहीं होगा जब तक database policies और data access की सुरक्षा जाँच पूरी न हो। वास्तविक accounts बनाने से पहले अभिभावक की निगरानी लें। किसी के साथ password या OTP साझा न करें।
+  </div>
+</section>
+
 <section id="home" class="view active"><div class="hero"><div><h1 data-i="heroTitle">हर हुनर को काम, हर व्यवसाय को सही कर्मचारी।</h1><p data-i="heroDesc">काम खोजने वाले वयस्क लोगों और स्थानीय व्यवसायों को एक ही जगह जोड़ें।</p><div class="actions"><button class="btn" onclick="show('jobs')" data-i="findWork">काम खोजें</button><button class="btn secondary" onclick="show('employer')" data-i="needStaff">मुझे कर्मचारी चाहिए</button></div></div>
 <div class="stats"><div class="stat">📍 <span data-i="cityBased">City-wise</span><small data-i="cityBasedD">शहर के अनुसार काम</small></div><div class="stat">🕒 <span data-i="flexible">Flexible</span><small data-i="flexibleD">समय के अनुसार विकल्प</small></div><div class="stat">🧰 <span data-i="skills">Skills</span><small data-i="skillsD">हुनर के अनुसार मिलान</small></div><div class="stat">🏪 <span data-i="allBusinesses">All businesses</span><small data-i="allBusinessesD">दुकान से कंपनी तक</small></div></div></div>
 <div class="notice"><b data-i="important">महत्वपूर्ण:</b> <span data-i="demoNotice">यह शुरुआती Demo है। अभी सुरक्षित Login या ऑनलाइन Database नहीं है। जानकारी इसी ब्राउज़र में रहती है। असली लॉन्च से पहले सुरक्षा, गोपनीयता और Employer verification जरूरी है। यह प्लेटफॉर्म केवल 18+ कामगारों के लिए है।</span></div>
@@ -73,5 +105,110 @@ document.getElementById("jobForm").addEventListener("submit",e=>{e.preventDefaul
 function renderAdmin(){let w=get("workers"),j=get("jobs");document.getElementById("workerCount").textContent=w.length;document.getElementById("postCount").textContent=j.length;document.getElementById("workerRecords").innerHTML=w.length?w.map(x=>`<div class="record">${esc(x.name)} · ${esc(x.city)} · ${esc(x.skill)} · ${esc(x.type)}</div>`).join(""):"No records yet.";document.getElementById("adminJobs").innerHTML=j.length?j.map(x=>`<div class="record">${esc(x.title)} · ${esc(x.city)} · ${esc(x.company)}</div>`).join(""):"No posts yet."}
 function exportData(){let rows=[["type","name/company","city","skill/job","type"],...get("workers").map(x=>["worker",x.name,x.city,x.skill,x.type]),...get("jobs").map(x=>["job",x.company,x.city,x.title,x.type])];let csv=rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="kaammitra-demo.csv";a.click();URL.revokeObjectURL(a.href)}
 function resetData(){if(confirm("Clear all demo records saved in this browser?")){localStorage.removeItem("km_workers");localStorage.removeItem("km_jobs");renderAdmin()}}
+
+// Supabase Authentication (auth only; database writes remain disabled until RLS policies are reviewed).
+// Replace these two placeholders with the project's Project URL and Publishable key.
+// Never put a secret/service_role key in browser code.
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+
+let kmSupabase = null;
+let kmAuthReady = false;
+
+function authMessage(message, isError=false) {
+  const el = document.getElementById("authMessage");
+  if (el) {
+    el.textContent = message;
+    el.style.color = isError ? "#b42318" : "";
+  }
+}
+
+function setAuthSession(session) {
+  const signedIn = !!(session && session.user);
+  const box = document.getElementById("authSession");
+  const signOut = document.getElementById("signOutBtn");
+  if (box) {
+    box.hidden = !signedIn;
+    box.textContent = signedIn
+      ? "Signed in: " + (session.user.email || "Email account") +
+        " · Role: " + (session.user.user_metadata?.role || "not selected")
+      : "";
+  }
+  if (signOut) signOut.hidden = !signedIn;
+}
+
+async function initKaamMitraAuth() {
+  const configured = SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("PASTE_") &&
+    SUPABASE_PUBLISHABLE_KEY.startsWith("sb_publishable_");
+  if (!configured) {
+    authMessage("अभी Project URL और Publishable key वेबसाइट में सेट नहीं हैं। अभी demo mode है।");
+    return;
+  }
+  if (!window.supabase || !window.supabase.createClient) {
+    authMessage("Supabase library load नहीं हुई। Internet connection जाँचें और page refresh करें।", true);
+    return;
+  }
+  try {
+    kmSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    kmAuthReady = true;
+    const { data, error } = await kmSupabase.auth.getSession();
+    if (error) throw error;
+    setAuthSession(data.session);
+    authMessage(data.session ? "आपका account session उपलब्ध है।" : "अब Worker या Employer account से sign in करें।");
+    kmSupabase.auth.onAuthStateChange((_event, session) => setAuthSession(session));
+  } catch (err) {
+    authMessage("Authentication शुरू नहीं हो पाया: " + (err.message || "Unknown error"), true);
+  }
+}
+
+document.getElementById("signUpBtn").addEventListener("click", async () => {
+  if (!kmAuthReady) return authMessage("पहले Supabase Project URL और Publishable key सेट करनी होगी।", true);
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const role = document.getElementById("accountRole").value;
+  if (!email || password.length < 8) return authMessage("सही Email और कम से कम 8 अक्षर का password डालें।", true);
+  const { data, error } = await kmSupabase.auth.signUp({
+    email, password,
+    options: {
+      emailRedirectTo: window.location.origin + window.location.pathname,
+      data: { role }
+    }
+  });
+  if (error) return authMessage(error.message, true);
+  if (data.session) {
+    setAuthSession(data.session);
+    authMessage("Account बन गया और session शुरू हो गया।");
+  } else {
+    authMessage("Sign-up request स्वीकार हुई। Email inbox में confirmation link देखें। Confirm होने तक sign in नहीं होगा।");
+  }
+});
+
+document.getElementById("signInBtn").addEventListener("click", async () => {
+  if (!kmAuthReady) return authMessage("पहले Supabase Project URL और Publishable key सेट करनी होगी।", true);
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  if (!email || !password) return authMessage("Email और password भरें।", true);
+  const { data, error } = await kmSupabase.auth.signInWithPassword({ email, password });
+  if (error) return authMessage(error.message, true);
+  setAuthSession(data.session);
+  authMessage("Sign in सफल हुआ।");
+});
+
+document.getElementById("signOutBtn").addEventListener("click", async () => {
+  if (!kmAuthReady) return;
+  const { error } = await kmSupabase.auth.signOut();
+  if (error) return authMessage(error.message, true);
+  setAuthSession(null);
+  authMessage("आप sign out हो गए हैं।");
+});
+
+const kmSupabaseScript = document.createElement("script");
+kmSupabaseScript.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+kmSupabaseScript.onload = initKaamMitraAuth;
+kmSupabaseScript.onerror = () => authMessage("Supabase library download नहीं हुई।", true);
+document.head.appendChild(kmSupabaseScript);
+
+
 renderJobs();renderAdmin();
 </script></body></html>
